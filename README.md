@@ -1,31 +1,30 @@
 # BasaGas
 
-This project contains a minimal implementation of the BasaGas LPG ordering platform with a React frontend and Node.js/Express backend. All assets and scripts are local so the app can run offline once dependencies are installed.
+This project contains a minimal implementation of the BasaGas LPG ordering platform using the MEAN stack. A Node.js/Express backend serves static AngularJS-powered HTML pages so the app can run fully offline once dependencies are installed.
+
 
 ## Prerequisites
 - Node.js 18+
 - npm
 - MongoDB running locally at `mongodb://localhost:27017/basagas`
 
-## Backend Setup
+## Setup & Run
+
 ```bash
 cd backend
 cp .env.example .env  # adjust if needed
 npm install
 npm start
 ```
-The backend exposes `POST /api/orders` for creating orders.
-
-## Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-The frontend runs at http://localhost:5173 and communicates with the backend at http://localhost:5000.
+The server listens on `http://localhost:5000` and serves:
+- `/` – Home page
+- `/order.html` – Order form that posts to `POST /api/orders`
+- `/pricing.html` – Pricing table
 
 ## Testing
-Both frontend and backend currently have placeholder tests:
+The backend currently includes placeholder tests:
 ```bash
-npm test  # run inside backend or frontend
+cd backend
+npm test
+
 ```

@@ -8,41 +8,60 @@
   <script src="scripts/app.js"></script>
 </head>
 <body ng-controller="OrderController as ctrl">
-  <h1>Order Refill</h1>
-  <form ng-submit="ctrl.submit()">
-    <label>Pickup Address
-      <input type="text" ng-model="ctrl.order.pickupAddress" required />
-    </label>
-    <label>Drop-off Address
-      <input type="text" ng-model="ctrl.order.dropoffAddress" required />
-    </label>
-    <label>Cylinder Size
-      <select ng-model="ctrl.order.cylinderSize" ng-init="ctrl.order.cylinderSize=2" required>
-        <option value="2">2kg</option>
-        <option value="3">3kg</option>
-        <option value="5">5kg</option>
-        <option value="7">7kg</option>
-      </select>
-    </label>
-    <label>Quantity
-      <input type="number" min="1" ng-model="ctrl.order.quantity" ng-init="ctrl.order.quantity=1" required />
-    </label>
-    <label>Return Time
-      <input type="datetime-local" ng-model="ctrl.order.returnTime" required />
-    </label>
-    <fieldset>
-      <legend>Payment Type</legend>
-      <label>
-        <input type="radio" ng-model="ctrl.order.paymentType" value="subscription" /> Subscription
+  <header>
+    <div class="container">
+      <h1>BasaGas</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/order.html">Order</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/login.html">Login</a>
+        <a href="/tracking.html">Track</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Order Refill</h2>
+    <form ng-submit="ctrl.submit()" class="form">
+      <label>Pickup Address
+        <input id="pickup" type="text" ng-model="ctrl.order.pickupAddress" required />
       </label>
-      <label>
-        <input type="radio" ng-model="ctrl.order.paymentType" value="pay-per-refill" ng-checked="true" /> Pay-per-refill
+      <button type="button" class="btn" ng-click="ctrl.useLocation('pickup')">Use My Location</button>
+      <label>Drop-off Address
+        <input id="dropoff" type="text" ng-model="ctrl.order.dropoffAddress" required />
       </label>
-    </fieldset>
-    <p>Total Price: {{ ctrl.total() | currency:'R' }}</p>
-    <button type="submit">Submit Order</button>
-  </form>
-  <p ng-if="ctrl.confirmation">Order ID: {{ctrl.confirmation.id}} - Price: {{ctrl.confirmation.price | currency:'R'}}
-  </p>
+      <button type="button" class="btn" ng-click="ctrl.useLocation('dropoff')">Use My Location</button>
+      <div id="order-map" class="map"></div>
+      <label>Cylinder Size
+        <select ng-model="ctrl.order.cylinderSize" ng-init="ctrl.order.cylinderSize=2" required>
+          <option value="2">2kg</option>
+          <option value="3">3kg</option>
+          <option value="5">5kg</option>
+          <option value="7">7kg</option>
+        </select>
+      </label>
+      <label>Quantity
+        <input type="number" min="1" ng-model="ctrl.order.quantity" ng-init="ctrl.order.quantity=1" required />
+      </label>
+      <label>Return Time
+        <input type="datetime-local" ng-model="ctrl.order.returnTime" required />
+      </label>
+      <fieldset>
+        <legend>Payment Type</legend>
+        <label>
+          <input type="radio" ng-model="ctrl.order.paymentType" value="subscription" /> Subscription
+        </label>
+        <label>
+          <input type="radio" ng-model="ctrl.order.paymentType" value="pay-per-refill" ng-checked="true" /> Pay-per-refill
+        </label>
+      </fieldset>
+      <p class="total">Total Price: {{ ctrl.total() | currency:'R' }}</p>
+      <button type="submit" class="btn">Submit Order</button>
+    </form>
+    <p ng-if="ctrl.confirmation">Order ID: {{ctrl.confirmation.id}} - Price: {{ctrl.confirmation.price | currency:'R'}}
+    </p>
+  </main>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initOrderMap"></script>
 </body>
 </html>

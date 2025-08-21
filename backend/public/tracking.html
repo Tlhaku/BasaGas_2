@@ -2,10 +2,12 @@
 <html lang="en" ng-app="basagasApp">
 <head>
   <meta charset="UTF-8" />
-  <title>BasaGas Pricing</title>
+  <title>Track Order</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="libs/angular.min.js"></script>
+  <script src="scripts/app.js"></script>
 </head>
-<body>
+<body ng-controller="TrackingController as ctrl">
   <header>
     <div class="container">
       <h1>BasaGas</h1>
@@ -15,21 +17,19 @@
         <a href="/pricing.html">Pricing</a>
         <a href="/login.html">Login</a>
         <a href="/tracking.html">Track</a>
-
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <h2>Pricing</h2>
+    <h2>Track Your Cylinders</h2>
+    <div id="tracking-map" class="map"></div>
     <table class="pricing-table">
-      <tr><th>Cylinder Size</th><th>Refill Price</th></tr>
-      <tr><td>2kg</td><td>R70</td></tr>
-      <tr><td>3kg</td><td>R104</td></tr>
-      <tr><td>5kg</td><td>R184</td></tr>
-      <tr><td>7kg</td><td>R250</td></tr>
+      <tr><th>Cylinder</th><th>Status</th></tr>
+      <tr ng-repeat="c in ctrl.cylinders"><td>{{c.id}}</td><td>{{c.status}}</td></tr>
     </table>
-    <p>Delivery fee: R45 per order. Subscription orders receive a 10% discount.</p>
   </main>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initTrackingMap"></script>
 </body>
 </html>

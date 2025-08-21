@@ -31,6 +31,8 @@
         <input type="password" ng-model="ctrl.credentials.password" required />
       </label>
       <button type="submit" class="btn">Login</button>
+      <p class="error" ng-if="ctrl.error">{{ctrl.error}}</p>
+
     </form>
   </main>
 </body>

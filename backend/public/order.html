@@ -28,10 +28,11 @@
       <label>Pickup Address
         <input id="pickup" type="text" ng-model="ctrl.order.pickupAddress" required />
       </label>
-      <button type="button" class="btn" ng-click="ctrl.useLocation()">Use My Location</button>
+      <button type="button" class="btn" ng-click="ctrl.useLocation('pickup')">Use My Location</button>
       <label>Drop-off Address
         <input id="dropoff" type="text" ng-model="ctrl.order.dropoffAddress" required />
       </label>
+      <button type="button" class="btn" ng-click="ctrl.useLocation('dropoff')">Use My Location</button>
       <div id="order-map" class="map"></div>
 
       <label>Cylinder Size

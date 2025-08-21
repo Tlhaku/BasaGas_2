@@ -26,17 +26,25 @@
       });
     };
 
-    ctrl.useLocation = function(){
+    ctrl.useLocation = function(target){
+
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(pos){
           const latlng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
           const geocoder = new google.maps.Geocoder();
           geocoder.geocode({location: latlng}, function(results){
             if(results[0]){
-              ctrl.order.pickupAddress = results[0].formatted_address;
-              if(orderMap){
-                orderMap.setCenter(latlng);
-                pickupMarker.setPosition(latlng);
+              if(target === 'pickup'){
+                ctrl.order.pickupAddress = results[0].formatted_address;
+                if(orderMap){
+                  orderMap.setCenter(latlng);
+                  pickupMarker.setPosition(latlng);
+                }
+              } else {
+                ctrl.order.dropoffAddress = results[0].formatted_address;
+                if(orderMap){
+                  dropoffMarker.setPosition(latlng);
+                }
               }
             }
           });
@@ -45,22 +53,37 @@
     };
   }]);
 
-  app.controller('LoginController', [function(){
+  app.controller('LoginController', ['$http', function($http){
     const ctrl = this;
     ctrl.credentials = {};
+    ctrl.error = null;
     ctrl.login = function(){
-      localStorage.setItem('basagasUser', ctrl.credentials.email);
-      window.location = '/tracking.html';
+      $http.post('/api/login', ctrl.credentials).then(function(){
+        window.location = '/tracking.html';
+      }, function(){
+        ctrl.error = 'Invalid email or password';
+      });
     };
   }]);
 
-  app.controller('TrackingController', ['$interval', function($interval){
+  app.controller('TrackingController', ['$http', '$interval', function($http, $interval){
     const ctrl = this;
     trackingCtrlRef = ctrl;
-    ctrl.cylinders = [
-      {id:'CYL-001', status:'Awaiting Pickup'},
-      {id:'CYL-002', status:'In Transit'}
-    ];
+    ctrl.cylinders = [];
+    ctrl.driver = null;
+
+    $http.get('/api/tracking').then(function(res){
+      ctrl.cylinders = res.data.cylinders;
+      ctrl.driver = res.data.driver;
+      if(trackingMap && ctrl.driver){
+        ctrl.driverMarker = new google.maps.Marker({map: trackingMap, title:'Driver', position: ctrl.driver});
+        trackingMap.setCenter(ctrl.driver);
+      }
+    }, function(){
+      window.location = '/login.html';
+    });
+
+
     ctrl.updateDriver = function(){
       if(ctrl.driverMarker){
         const pos = ctrl.driverMarker.getPosition();
@@ -103,9 +126,13 @@ function initOrderMap(){
 
 let trackingMap;
 function initTrackingMap(){
-  const ctrl = trackingCtrlRef;
   trackingMap = new google.maps.Map(document.getElementById('tracking-map'), {
     center:{lat:-26.2041,lng:28.0473}, zoom:12
   });
-  ctrl.driverMarker = new google.maps.Marker({map: trackingMap, title:'Driver'});
+  const ctrl = trackingCtrlRef;
+  if(ctrl && ctrl.driver){
+    ctrl.driverMarker = new google.maps.Marker({map: trackingMap, title:'Driver', position: ctrl.driver});
+    trackingMap.setCenter(ctrl.driver);
+  }
+
 }

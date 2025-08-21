@@ -27,6 +27,7 @@
     };
 
     ctrl.useLocation = function(target){
+
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(pos){
           const latlng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
@@ -82,6 +83,7 @@
       window.location = '/login.html';
     });
 
+
     ctrl.updateDriver = function(){
       if(ctrl.driverMarker){
         const pos = ctrl.driverMarker.getPosition();
@@ -132,4 +134,5 @@ function initTrackingMap(){
     ctrl.driverMarker = new google.maps.Marker({map: trackingMap, title:'Driver', position: ctrl.driver});
     trackingMap.setCenter(ctrl.driver);
   }
+
 }

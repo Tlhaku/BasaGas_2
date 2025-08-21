@@ -17,6 +17,7 @@
         <a href="/pricing.html">Pricing</a>
         <a href="/login.html">Login</a>
         <a href="/tracking.html">Track</a>
+
       </nav>
     </div>
   </header>
@@ -32,6 +33,7 @@
         <input id="dropoff" type="text" ng-model="ctrl.order.dropoffAddress" required />
       </label>
       <div id="order-map" class="map"></div>
+
       <label>Cylinder Size
         <select ng-model="ctrl.order.cylinderSize" ng-init="ctrl.order.cylinderSize=2" required>
           <option value="2">2kg</option>
@@ -62,5 +64,6 @@
     </p>
   </main>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initOrderMap"></script>
+
 </body>
 </html>

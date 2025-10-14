@@ -121,16 +121,34 @@ export default function OrderForm() {
     if (!googleMaps) return '';
 
     let placeId = '';
+
     try {
-      const directionsService = new googleMaps.maps.DirectionsService();
-      const directions = await directionsService.route({
-        origin: location,
-        destination: { lat: location.lat + 0.0001, lng: location.lng },
-        travelMode: googleMaps.maps.TravelMode.DRIVING,
+      const response = await fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+          'X-Goog-FieldMask': 'routes.legs.startLocation.placeId,routes.legs.startLocation.latLng',
+        },
+        body: JSON.stringify({
+          origin: { location: { latLng: { latitude: location.lat, longitude: location.lng } } },
+          destination: {
+            location: {
+              latLng: { latitude: location.lat + 0.0001, longitude: location.lng + 0.0001 },
+            },
+          },
+          travelMode: 'DRIVE',
+        }),
       });
-      placeId = directions?.geocoded_waypoints?.[0]?.place_id ?? '';
+
+      if (response.ok) {
+        const data = await response.json();
+        placeId = data?.routes?.[0]?.legs?.[0]?.startLocation?.placeId ?? '';
+      } else {
+        console.warn('Routes API lookup failed', await response.text());
+      }
     } catch (error) {
-      console.warn('Routes API lookup failed', error);
+      console.warn('Routes API request error', error);
     }
 
     if (placeId) {
@@ -209,7 +227,7 @@ export default function OrderForm() {
             <span className="flex flex-wrap items-baseline gap-2">
               Pick-up Address
               <span className="text-xs font-normal text-gray-500">
-                Where should we pick up your empty cylinders?
+                Where should we pick up your empty cylinders
               </span>
             </span>
           </label>
@@ -234,12 +252,12 @@ export default function OrderForm() {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-10">
           <label className="flex flex-col text-left text-sm font-semibold text-gray-700">
             <span className="flex flex-wrap items-baseline gap-2">
               Drop-off Address
               <span className="text-xs font-normal text-gray-500">
-                Where should we drop off your refilled cylinders?
+                Where should we drop off your refilled cylinders
               </span>
             </span>
           </label>
@@ -264,7 +282,7 @@ export default function OrderForm() {
           </div>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-3">
           <label className="block text-left text-sm font-semibold text-gray-700">Cylinder Size</label>
           <select
             className="mt-2 w-full rounded border border-gray-300 p-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"

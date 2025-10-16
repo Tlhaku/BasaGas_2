@@ -1,51 +1,63 @@
 # BasaGas
 
-This project contains a minimal implementation of the BasaGas LPG ordering platform using the MEAN stack. A Node.js/Express backend serves static AngularJS-powered HTML pages styled with a blue and orange theme inspired by [Communica](https://www.communica.co.za/). All client-side dependencies (AngularJS and styles) are included in the repo so the app can run fully offline once Node and MongoDB are installed.
-
+This repository contains a lightweight BasaGas prototype with a Node/Express backend and a modern React front end that consumes Google Maps services for location-aware ordering and live delivery tracking.
 
 ## Prerequisites
-- Node.js 18+
-- npm
-- MongoDB running locally at `mongodb://localhost:27017/basagas`
 
-## Setup & Run
+Install the following tools before running either project:
+
+- [Node.js 18+](https://nodejs.org/) (which includes `npm`).
+- [MongoDB Community Server](https://www.mongodb.com/try/download/community) running locally at `mongodb://localhost:27017/basagas` for the API.
+- A Google Maps Platform API key with the **Maps JavaScript**, **Places**, **Routes**, and **Roads** APIs enabled. The demo front end falls back to `AIzaSyCYxFkL9vcvbaFz-Ut1Lm2Vge5byodujfk` if no environment variable is supplied.
+
+## Backend (Express API)
 
 ```bash
 cd backend
-cp .env.example .env  # adjust if needed
+cp .env.example .env   # configure MongoDB connection or credentials if needed
 npm install
 npm start
 ```
-The server listens on `http://localhost:5000` and serves:
-- `/` – Home page
-- `/order.html` – Order form with Google Maps pickup/delivery selection that posts to `POST /api/orders`
-- `/pricing.html` – Pricing table
-- `/login.html` – Customer login
-- `/tracking.html` – Cylinder and driver tracking map (requires login)
 
-Default credentials for testing:
-- **Email:** `customer@example.com`
-- **Password:** `password123`
- 
-### Required packages
-- **Node.js 18+** and **npm** – runtime and package manager for the server.
-- **MongoDB** – running locally on `mongodb://localhost:27017/basagas`.
-No additional packages are required for the front-end because AngularJS (v1.8.3) is bundled under `backend/public/libs`. To enable the Google Maps features, supply a valid API key by replacing `YOUR_API_KEY` in `order.html` and `tracking.html`.
+The backend listens on `http://localhost:5000` and provides the order endpoints consumed by the React client.
 
-- `/login.html` – Customer login
-- `/tracking.html` – Cylinder and driver tracking map
+### Backend dependencies
 
- 
-### Required packages
-- **Node.js 18+** and **npm** – runtime and package manager for the server.
-- **MongoDB** – running locally on `mongodb://localhost:27017/basagas`.
-No additional packages are required for the front-end because AngularJS (v1.8.3) is bundled under `backend/public/libs`. To enable the Google Maps features, supply a valid API key by replacing `YOUR_API_KEY` in `order.html` and `tracking.html`.
+- `express`
+- `mongodb`
+- Any other libraries listed in `backend/package.json` (installed automatically via `npm install`).
 
+## Frontend (React + Vite)
+
+```bash
+cd frontend
+npm install
+echo "VITE_GOOGLE_MAPS_API_KEY=YOUR_KEY_HERE" > .env  # optional: omit to use the bundled demo key
+npm run dev
+```
+
+The development server runs on `http://localhost:5173`. The React interface includes:
+
+- A Google Places-powered order form with live pricing and "Use my location" shortcuts.
+- Registration and login flows for customers and delivery drivers.
+- A tracking dashboard backed by the Maps, Routes, and Roads APIs that can follow a device's live geolocation updates.
+
+### Frontend dependencies
+
+Installed via `npm install` in the `frontend` directory:
+
+- `react` and `react-dom`
+- `react-router-dom`
+- `@googlemaps/js-api-loader`
+- Vite, ESLint, Tailwind CSS, and related tooling (see `frontend/package.json`).
 
 ## Testing
-The backend currently includes placeholder tests:
+
+The backend currently exposes placeholder tests:
+
 ```bash
 cd backend
 npm test
-
 ```
+
+The frontend does not yet include automated tests; use `npm run lint` or manual browser testing to verify changes.

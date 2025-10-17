@@ -34,7 +34,8 @@ Install the following tools on your local machine before running the stack:
    ```
 
 The backend starts on `http://localhost:5000` by default and exposes REST endpoints under `/api`, WebSocket events for
-live tracking, and serves the production Angular bundle from `frontend/dist/basagas-frontend` when built.
+live tracking, and serves the production Angular bundle from `frontend/dist/basagas-frontend/browser` (Angular 18
+default) when built.
 
 ## Frontend setup
 
@@ -45,15 +46,16 @@ live tracking, and serves the production Angular bundle from `frontend/dist/basa
    cp src/assets/env.template.js src/assets/env.js  # adjust URLs and keys
    ```
 2. Update `src/assets/env.js` with your API base URL, socket URL, Google Maps key, and Yoco public key.
-3. Run the development server:
+3. Build the production bundle that Express can host:
+   ```bash
+   npm run build
+   ```
+   The compiled files will be generated in `dist/basagas-frontend/browser/`.
+4. (Optional for rapid iteration) run the Angular development server instead of building:
    ```bash
    npm start
    ```
    The Angular app runs on `http://localhost:4200` and proxies API calls to the backend configured in `env.js`.
-
-To produce a production build that the Express server can serve statically, run `npm run build` in the `frontend`
-directory and copy the generated `dist/basagas-frontend` folder (the build step writes to the correct location by
-default).
 
 ## Running the full platform
 

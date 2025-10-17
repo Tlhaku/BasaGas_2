@@ -313,14 +313,31 @@ io.on('connection', (socket) => {
   });
 });
 
-const distPath = path.join(__dirname, '..', 'frontend', 'dist', 'basagas-frontend');
-if (fs.existsSync(distPath)) {
+const angularDistCandidates = [
+  path.join(__dirname, '..', 'frontend', 'dist', 'basagas-frontend', 'browser'),
+  path.join(__dirname, '..', 'frontend', 'dist', 'basagas-frontend'),
+];
+
+const distPath = angularDistCandidates.find((candidate) => fs.existsSync(candidate));
+
+if (distPath) {
+  console.log(`Serving Angular build from ${distPath}`);
   app.use(express.static(distPath));
-  app.get('*', (_req, res) => {
+  app.get(/^(?!\/api).*/, (_req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 } else {
   console.warn('Angular build not found. API will run without serving frontend assets.');
+  const fallbackMessage = [
+    'BasaGas API is running.',
+    'To view the Angular frontend from this server, run "npm run build" inside the frontend/ directory.',
+    'The compiled assets must exist at frontend/dist/basagas-frontend/browser before restarting the API.',
+    'Alternatively, start the Angular dev server with "npm start" inside frontend/ and browse http://localhost:4200/.',
+  ].join('\n');
+
+  app.get(/^(?!\/api).*/, (_req, res) => {
+    res.type('text/plain').status(200).send(fallbackMessage);
+  });
 }
 
 

@@ -1,0 +1,15 @@
+<section class="auth">
+  <div class="container auth-card card">
+    <h1>Login</h1>
+    <p>Access your BasaGas account to place orders and track deliveries.</p>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <label>Email</label>
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+      <label>Password</label>
+      <input type="password" formControlName="password" placeholder="••••••••" />
+      <button class="cta-button" type="submit" [disabled]="loading">Login</button>
+    </form>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p class="link">Need an account? <a routerLink="/register">Register here</a>.</p>
+  </div>
+</section>

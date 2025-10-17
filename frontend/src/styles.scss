@@ -1,0 +1,72 @@
+@use 'sass:color';
+
+:root {
+  --basagas-primary: #ef5b0c;
+  --basagas-secondary: #0a2342;
+  --basagas-light: #f9fafb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--basagas-light);
+  color: #1f2937;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  margin-bottom: 1rem;
+  color: var(--basagas-secondary);
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--basagas-primary), #ff8a3d);
+  color: white;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.85rem 1.8rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 25px rgba(239, 91, 12, 0.35);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(239, 91, 12, 0.45);
+}
+
+.card {
+  background: white;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.1);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

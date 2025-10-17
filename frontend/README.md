@@ -1,12 +1,20 @@
-# React + Vite
+# BasaGas Codex Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project contains the Angular application for the BasaGas Codex platform. It implements the public marketing pages,
+customer and deliverer flows, order capture, live tracking, and Yoco payment tokenisation demo outlined in the SRS.
 
-Currently, two official plugins are available:
+## Available scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `npm start` – run the development server on `http://localhost:4200`.
+- `npm run build` – build the production bundle to `dist/basagas-frontend`.
+- `npm test` – execute Karma unit tests (none provided yet).
 
-## Expanding the ESLint configuration
+## Environment configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Copy `src/assets/env.template.js` to `src/assets/env.js` and provide the correct values for:
+
+- `API_BASE_URL` – typically `http://localhost:5000/api`.
+- `SOCKET_URL` – typically `http://localhost:5000`.
+- `GOOGLE_MAPS_API_KEY` – Google Maps JavaScript API key with Places access.
+- `YOCO_PUBLIC_KEY` – Yoco Checkout public key.
+- `PRODUCTION` – set to `true` when serving from production.

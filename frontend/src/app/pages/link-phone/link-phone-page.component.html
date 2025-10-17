@@ -1,0 +1,16 @@
+<section class="link-phone">
+  <div class="container card">
+    <h1 class="section-title">Link My Phone</h1>
+    <p>
+      Deliverers can use this page to broadcast their live location to customers and operations. Keep the page open
+      while delivering so customers can see your progress every five seconds.
+    </p>
+    <div class="actions">
+      <button class="cta-button" type="button" (click)="startBroadcast()" [disabled]="isBroadcasting()">
+        Start broadcasting
+      </button>
+      <button type="button" class="stop" (click)="stopBroadcast()" [disabled]="!isBroadcasting()">Stop</button>
+    </div>
+    <p class="status" [class.active]="isBroadcasting()">{{ statusMessage() }}</p>
+  </div>
+</section>

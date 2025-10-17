@@ -1,0 +1,32 @@
+<section class="auth">
+  <div class="container auth-card card">
+    <h1>Create an account</h1>
+    <p>Register as a customer or deliverer to start using BasaGas Codex.</p>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <label>Full Name</label>
+      <input type="text" formControlName="username" placeholder="Lindiwe M" />
+      <label>Email</label>
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+      <label>Mobile Number</label>
+      <input type="tel" formControlName="phone" placeholder="071 234 5678" />
+      <label>Role</label>
+      <select formControlName="role">
+        <option value="customer">Customer</option>
+        <option value="deliverer">Deliverer</option>
+      </select>
+      <label>Password</label>
+      <input type="password" formControlName="password" placeholder="••••••••" />
+      <label>Cylinder Manufacturer (optional)</label>
+      <input type="text" formControlName="cylinderManufacturer" placeholder="Afrox, Oryx..." />
+      <label>Usual Pickup Address</label>
+      <input type="text" formControlName="usualPickupAddress" placeholder="Where we collect empties" />
+      <label>Usual Drop-off Address</label>
+      <input type="text" formControlName="usualDropoffAddress" placeholder="Where we deliver refills" />
+      <label *ngIf="registerForm.value.role === 'deliverer'">Starting Point (deliverers)</label>
+      <input *ngIf="registerForm.value.role === 'deliverer'" type="text" formControlName="startingPoint" placeholder="Your depot or current area" />
+      <button class="cta-button" type="submit" [disabled]="loading">Register</button>
+    </form>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p class="link">Already registered? <a routerLink="/login">Login instead</a>.</p>
+  </div>
+</section>

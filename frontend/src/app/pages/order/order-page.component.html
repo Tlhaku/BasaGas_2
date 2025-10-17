@@ -1,0 +1,52 @@
+<section class="order-hero">
+  <div class="container">
+    <h1 class="section-title">Schedule your LPG refill</h1>
+    <p class="subtitle">
+      Provide your pickup and drop-off addresses, select cylinder details, and confirm payment through the secure Yoco
+      checkout experience.
+    </p>
+    <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" novalidate class="card order-form">
+      <div class="form-field">
+        <label for="pickup">Where should we pick up your empty cylinders?</label>
+        <div class="input-with-action">
+          <input #pickupInput id="pickup" type="text" formControlName="pickupAddress" placeholder="Type the pickup address" />
+          <button type="button" (click)="useMyLocation('pickupAddress')">Use My Location</button>
+        </div>
+        <small *ngIf="orderForm.controls.pickupAddress.touched && orderForm.controls.pickupAddress.invalid">
+          Pickup address is required.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="dropoff">Where should we drop off your refilled cylinders?</label>
+        <div class="input-with-action">
+          <input #dropoffInput id="dropoff" type="text" formControlName="dropoffAddress" placeholder="Type the drop-off address" />
+          <button type="button" (click)="useMyLocation('dropoffAddress')">Use My Location</button>
+        </div>
+        <small *ngIf="orderForm.controls.dropoffAddress.touched && orderForm.controls.dropoffAddress.invalid">
+          Drop-off address is required.
+        </small>
+      </div>
+
+      <div class="inline-grid">
+        <div class="form-field">
+          <label for="size">Cylinder Size</label>
+          <select id="size" formControlName="cylinderSize">
+            <option *ngFor="let size of cylinderSizes" [value]="size.value">{{ size.label }}</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="manufacturer">Manufacturer</label>
+          <input id="manufacturer" type="text" formControlName="manufacturer" placeholder="e.g. Afrox" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="cta-button" type="submit" [disabled]="submitting">Submit Order</button>
+      </div>
+
+      <p class="form-feedback success" *ngIf="submissionMessage">{{ submissionMessage }}</p>
+      <p class="form-feedback error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+  </div>
+</section>

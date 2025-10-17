@@ -1,0 +1,31 @@
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="logo" routerLink="/">BasaGas Codex</a>
+    <nav class="nav-links" [class.open]="mobileMenuOpen()">
+      <a routerLink="/" routerLinkActive="active" (click)="mobileMenuOpen.set(false)">Home</a>
+      <a routerLink="/order" routerLinkActive="active" (click)="mobileMenuOpen.set(false)">Order</a>
+      <a routerLink="/pricing" routerLinkActive="active" (click)="mobileMenuOpen.set(false)">Pricing</a>
+      <a routerLink="/visitor-comments" routerLinkActive="active" (click)="mobileMenuOpen.set(false)">Visitor Comments</a>
+      <div class="dropdown" [class.open]="trackMenuOpen()">
+        <button class="dropdown-toggle" type="button" (click)="toggleTrackMenu()">
+          Track
+          <span class="chevron">▾</span>
+        </button>
+        <div class="dropdown-menu">
+          <a routerLink="/track" (click)="{ mobileMenuOpen.set(false); trackMenuOpen.set(false); }">Track My Order</a>
+          <a routerLink="/track/link-phone" (click)="{ mobileMenuOpen.set(false); trackMenuOpen.set(false); }">Link My Phone</a>
+        </div>
+      </div>
+      <ng-container *ngIf="user(); else guestLinks">
+        <button class="logout" type="button" (click)="logout()">Logout</button>
+      </ng-container>
+      <ng-template #guestLinks>
+        <a routerLink="/login" routerLinkActive="active" (click)="mobileMenuOpen.set(false)">Login</a>
+        <a routerLink="/register" class="cta" (click)="mobileMenuOpen.set(false)">Register</a>
+      </ng-template>
+    </nav>
+    <button class="mobile-toggle" type="button" (click)="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

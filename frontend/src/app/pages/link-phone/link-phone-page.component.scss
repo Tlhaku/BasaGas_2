@@ -1,0 +1,39 @@
+.link-phone {
+  padding: 3rem 0;
+}
+
+.card {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.card p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+  flex-wrap: wrap;
+}
+
+.stop {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  background: rgba(220, 38, 38, 0.1);
+  color: #b91c1c;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.status.active {
+  color: #047857;
+}

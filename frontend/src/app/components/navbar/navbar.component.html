@@ -12,8 +12,8 @@
           <span class="chevron">▾</span>
         </button>
         <div class="dropdown-menu">
-          <a routerLink="/track" (click)="{ mobileMenuOpen.set(false); trackMenuOpen.set(false); }">Track My Order</a>
-          <a routerLink="/track/link-phone" (click)="{ mobileMenuOpen.set(false); trackMenuOpen.set(false); }">Link My Phone</a>
+          <a routerLink="/track" (click)="mobileMenuOpen.set(false); trackMenuOpen.set(false)">Track My Order</a>
+          <a routerLink="/track/link-phone" (click)="mobileMenuOpen.set(false); trackMenuOpen.set(false)">Link My Phone</a>
         </div>
       </div>
       <ng-container *ngIf="user(); else guestLinks">

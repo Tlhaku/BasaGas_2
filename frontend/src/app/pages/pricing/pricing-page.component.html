@@ -1,0 +1,16 @@
+<section class="pricing">
+  <div class="container">
+    <header class="pricing-header">
+      <h1 class="section-title">Transparent LPG pricing</h1>
+      <p>Prices include standard refill costs plus a flat R45 delivery fee within our service areas.</p>
+    </header>
+    <div class="pricing-grid">
+      <article class="pricing-card" *ngFor="let tier of tiers">
+        <h2>{{ tier.size }}</h2>
+        <p class="price">{{ tier.price }}</p>
+        <p class="description">{{ tier.description }}</p>
+        <button type="button" class="cta-button">Order this size</button>
+      </article>
+    </div>
+  </div>
+</section>

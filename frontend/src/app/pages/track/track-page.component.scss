@@ -1,0 +1,51 @@
+.track-page {
+  position: relative;
+  min-height: 520px;
+}
+
+.map-wrapper {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+}
+
+.deliverer-panel {
+  margin-top: 1.5rem;
+}
+
+.deliverer-panel h2 {
+  margin-top: 0;
+}
+
+.deliverer-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.deliverer-panel li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba(239, 91, 12, 0.08);
+}
+
+.deliverer-panel .name {
+  font-weight: 600;
+}
+
+.deliverer-panel .time {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  padding: 4rem 0;
+  color: #6b7280;
+}

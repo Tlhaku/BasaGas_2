@@ -1,0 +1,32 @@
+<section class="track-page" *ngIf="mapLoaded(); else loading">
+  <div class="map-wrapper">
+    <google-map
+      height="500px"
+      width="100%"
+      [center]="center()"
+      [zoom]="zoom()"
+      [options]="mapOptions"
+    >
+      <map-marker
+        *ngFor="let deliverer of deliverers()"
+        [position]="{ lat: deliverer.lat, lng: deliverer.lng }"
+        [title]="deliverer.username"
+      ></map-marker>
+    </google-map>
+  </div>
+  <aside class="deliverer-panel card">
+    <h2>Active deliverers</h2>
+    <p *ngIf="!deliverers().length">No deliverers are broadcasting at the moment.</p>
+    <ul>
+      <li *ngFor="let deliverer of deliverers()">
+        <span class="name">{{ deliverer.username }}</span>
+        <span class="time">Updated {{ deliverer.updated | date: 'shortTime' }}</span>
+      </li>
+    </ul>
+  </aside>
+</section>
+<ng-template #loading>
+  <div class="loading">
+    <p>Loading the live delivery map…</p>
+  </div>
+</ng-template>

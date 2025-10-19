@@ -1,51 +1,69 @@
-# BasaGas
+# BasaGas Codex Platform
 
-This project contains a minimal implementation of the BasaGas LPG ordering platform using the MEAN stack. A Node.js/Express backend serves static AngularJS-powered HTML pages styled with a blue and orange theme inspired by [Communica](https://www.communica.co.za/). All client-side dependencies (AngularJS and styles) are included in the repo so the app can run fully offline once Node and MongoDB are installed.
+This repository contains the BasaGas Codex MVP – a MEAN stack implementation for small-cylinder LPG refill ordering,
+deliverer live tracking, and Yoco payment tokenisation.
 
+## Project structure
+
+- `backend/` – Express + MongoDB API with JWT authentication, CSRF protection, WebSocket live tracking, and Yoco token
+  placeholder endpoints.
+- `frontend/` – Angular application that powers the marketing pages, order flow, customer/deliverer accounts, real-time
+  map tracking, and deliverer broadcasting screens.
 
 ## Prerequisites
-- Node.js 18+
-- npm
-- MongoDB running locally at `mongodb://localhost:27017/basagas`
 
-## Setup & Run
+Install the following tools on your local machine before running the stack:
 
-```bash
-cd backend
-cp .env.example .env  # adjust if needed
-npm install
-npm start
-```
-The server listens on `http://localhost:5000` and serves:
-- `/` – Home page
-- `/order.html` – Order form with Google Maps pickup/delivery selection that posts to `POST /api/orders`
-- `/pricing.html` – Pricing table
-- `/login.html` – Customer login
-- `/tracking.html` – Cylinder and driver tracking map (requires login)
+- **Node.js 18+** and **npm** – runtime and package manager for both backend and frontend.
+- **MongoDB 6+** – local or cloud instance accessible via connection string (defaults to `mongodb://127.0.0.1:27017/basagas`).
+- **Google Maps JavaScript API key** with Places library enabled.
+- **Yoco Checkout public key** for tokenisation demos.
 
-Default credentials for testing:
-- **Email:** `customer@example.com`
-- **Password:** `password123`
- 
-### Required packages
-- **Node.js 18+** and **npm** – runtime and package manager for the server.
-- **MongoDB** – running locally on `mongodb://localhost:27017/basagas`.
-No additional packages are required for the front-end because AngularJS (v1.8.3) is bundled under `backend/public/libs`. To enable the Google Maps features, supply a valid API key by replacing `YOUR_API_KEY` in `order.html` and `tracking.html`.
+## Backend setup
 
-- `/login.html` – Customer login
-- `/tracking.html` – Cylinder and driver tracking map
+1. Copy the environment template and populate secrets:
+   ```bash
+   cd backend
+   cp ../.env.example ../.env
+   # edit ../.env to set MONGODB_URI, JWT_SECRET, CLIENT_ORIGINS, YOCO keys, etc.
+   ```
+2. Install dependencies and start the API:
+   ```bash
+   npm install
+   npm run dev   # or npm start for production mode
+   ```
 
- 
-### Required packages
-- **Node.js 18+** and **npm** – runtime and package manager for the server.
-- **MongoDB** – running locally on `mongodb://localhost:27017/basagas`.
-No additional packages are required for the front-end because AngularJS (v1.8.3) is bundled under `backend/public/libs`. To enable the Google Maps features, supply a valid API key by replacing `YOUR_API_KEY` in `order.html` and `tracking.html`.
+The backend starts on `http://localhost:5000` by default and exposes REST endpoints under `/api`, WebSocket events for
+live tracking, and serves the production Angular bundle from `frontend/dist/basagas-frontend/browser` (Angular 18
+default) when built.
 
+## Frontend setup
+
+1. In a new terminal, install Angular dependencies:
+   ```bash
+   cd frontend
+   npm install
+   cp src/assets/env.template.js src/assets/env.js  # adjust URLs and keys
+   ```
+2. Update `src/assets/env.js` with your API base URL, socket URL, Google Maps key, and Yoco public key.
+3. Build the production bundle that Express can host:
+   ```bash
+   npm run build
+   ```
+   The compiled files will be generated in `dist/basagas-frontend/browser/`.
+4. (Optional for rapid iteration) run the Angular development server instead of building:
+   ```bash
+   npm start
+   ```
+   The Angular app runs on `http://localhost:4200` and proxies API calls to the backend configured in `env.js`.
+
+## Running the full platform
+
+1. Start MongoDB locally or update `.env` with your Atlas connection string.
+2. Run the backend (`npm run dev` inside `backend/`).
+3. Run the Angular frontend (`npm start` inside `frontend/`).
+4. Register a user via the frontend, place an order, and share deliverer location to exercise the workflow.
 
 ## Testing
-The backend currently includes placeholder tests:
-```bash
-cd backend
-npm test
 
-```
+Placeholder npm test scripts exist for both workspaces. There are currently no automated tests beyond dependency checks.

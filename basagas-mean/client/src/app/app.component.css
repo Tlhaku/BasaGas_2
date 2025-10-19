@@ -1,0 +1,96 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #1d3557;
+  background: #f1f5f9;
+  min-height: 100vh;
+}
+
+.page {
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  max-width: 720px;
+  width: 100%;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.actions button {
+  background-color: #ff7f11;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  width: min(240px, 100%);
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.actions button:not(:disabled):hover,
+.actions button:not(:disabled):focus {
+  box-shadow: 0 10px 20px rgba(255, 127, 17, 0.3);
+  transform: translateY(-2px);
+}
+
+.results {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.results article {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(29, 53, 87, 0.08);
+  padding: 1.5rem;
+}
+
+.results h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.results pre {
+  background: #0b132b;
+  border-radius: 0.75rem;
+  color: #f8f9fa;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.95rem;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

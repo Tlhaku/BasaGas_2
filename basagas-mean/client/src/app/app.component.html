@@ -1,0 +1,22 @@
+<main class="page">
+  <header class="hero">
+    <h1>BasaGas Delivery Console</h1>
+    <p>Minimal MEAN starter to verify the API and database.</p>
+  </header>
+
+  <section class="actions">
+    <button type="button" (click)="checkApi()" [disabled]="loading()">Check API</button>
+    <button type="button" (click)="pingDb()" [disabled]="loading()">Ping DB</button>
+  </section>
+
+  <section class="results">
+    <article>
+      <h2>API Status</h2>
+      <pre>{{ status() || 'No response yet.' }}</pre>
+    </article>
+    <article>
+      <h2>MongoDB Ping</h2>
+      <pre>{{ pingResult() || 'No ping yet.' }}</pre>
+    </article>
+  </section>
+</main>

@@ -67,6 +67,10 @@ cd ../client
 npm install
 ```
 
+> **Troubleshooting:** If you see `Error: Cannot find module 'express'` (or a similar message for other packages) when running the
+> API, it means the server dependencies were not installed. Run `npm install` inside `basagas-mean/server` before starting the
+> server again.
+
 ## Running the API
 
 Start MongoDB locally or ensure your Atlas cluster is running, then launch the Express server:

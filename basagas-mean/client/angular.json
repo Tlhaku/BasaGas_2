@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/angular-cli",
   "version": 1,
-  "defaultProject": "client",
   "projects": {
     "client": {
       "projectType": "application",
@@ -59,5 +58,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

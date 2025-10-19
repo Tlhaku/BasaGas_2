@@ -2,6 +2,14 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+interface ApiHealthResponse {
+  status: string;
+}
+
+interface PingResponse {
+  _id: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -18,13 +26,13 @@ export class AppComponent {
 
   checkApi(): void {
     this.loading.set(true);
-    this.http.get<{ status: string }>('/api/health').subscribe({
-      next: (response) => {
+    this.http.get<ApiHealthResponse>('/api/health').subscribe({
+      next: (response: ApiHealthResponse) => {
         this.status.set(JSON.stringify(response));
         this.loading.set(false);
       },
-      error: (error) => {
-        this.status.set(`Error: ${error.message}`);
+      error: (error: unknown) => {
+        this.status.set(`Error: ${this.formatError(error)}`);
         this.loading.set(false);
       }
     });
@@ -32,15 +40,31 @@ export class AppComponent {
 
   pingDb(): void {
     this.loading.set(true);
-    this.http.post<{ _id: string }>('/api/ping', {}).subscribe({
-      next: (response) => {
+    this.http.post<PingResponse>('/api/ping', {}).subscribe({
+      next: (response: PingResponse) => {
         this.pingResult.set(JSON.stringify(response));
         this.loading.set(false);
       },
-      error: (error) => {
-        this.pingResult.set(`Error: ${error.message}`);
+      error: (error: unknown) => {
+        this.pingResult.set(`Error: ${this.formatError(error)}`);
         this.loading.set(false);
       }
     });
+  }
+
+  private formatError(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    if (typeof error === 'string') {
+      return error;
+    }
+
+    try {
+      return JSON.stringify(error);
+    } catch (stringifyError) {
+      return `Unexpected error: ${String(stringifyError)}`;
+    }
   }
 }
